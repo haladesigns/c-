@@ -1,0 +1,20 @@
+C:\Users\Dell\documents\visual studio 2017\Projects\test\test\bin\Debug\netcoreapp1.1\Functional_csharp.deps.json
+C:\Users\Dell\documents\visual studio 2017\Projects\test\test\bin\Debug\netcoreapp1.1\Functional_csharp.runtimeconfig.json
+C:\Users\Dell\documents\visual studio 2017\Projects\test\test\bin\Debug\netcoreapp1.1\Functional_csharp.runtimeconfig.dev.json
+C:\Users\Dell\documents\visual studio 2017\Projects\test\test\bin\Debug\netcoreapp1.1\Functional_csharp.dll
+C:\Users\Dell\documents\visual studio 2017\Projects\test\test\bin\Debug\netcoreapp1.1\Functional_csharp.pdb
+C:\Users\Dell\documents\visual studio 2017\Projects\test\test\obj\Debug\netcoreapp1.1\Functional_csharp.AssemblyInfo.cs
+C:\Users\Dell\documents\visual studio 2017\Projects\test\test\obj\Debug\netcoreapp1.1\Functional_csharp.dll
+C:\Users\Dell\documents\visual studio 2017\Projects\test\test\obj\Debug\netcoreapp1.1\Functional_csharp.pdb
+C:\Users\Dell\documents\visual studio 2017\Projects\test\test\obj\Debug\netcoreapp1.1\Functional_csharp.csprojResolveAssemblyReference.cache
+C:\Users\fhala958\Desktop\Git Repos\C#\functionalcsharp\test\bin\Debug\netcoreapp1.1\Functional_csharp.deps.json
+C:\Users\fhala958\Desktop\Git Repos\C#\functionalcsharp\test\bin\Debug\netcoreapp1.1\Functional_csharp.runtimeconfig.json
+C:\Users\fhala958\Desktop\Git Repos\C#\functionalcsharp\test\bin\Debug\netcoreapp1.1\Functional_csharp.runtimeconfig.dev.json
+C:\Users\fhala958\Desktop\Git Repos\C#\functionalcsharp\test\bin\Debug\netcoreapp1.1\Functional_csharp.dll
+C:\Users\fhala958\Desktop\Git Repos\C#\functionalcsharp\test\bin\Debug\netcoreapp1.1\Functional_csharp.pdb
+C:\Users\fhala958\Desktop\Git Repos\C#\functionalcsharp\test\obj\Debug\netcoreapp1.1\Functional_csharp.csprojResolveAssemblyReference.cache
+C:\Users\fhala958\Desktop\Git Repos\C#\functionalcsharp\test\obj\Debug\netcoreapp1.1\Functional_csharp.csproj.CoreCompileInputs.cache
+C:\Users\fhala958\Desktop\Git Repos\C#\functionalcsharp\test\obj\Debug\netcoreapp1.1\Functional_csharp.AssemblyInfoInputs.cache
+C:\Users\fhala958\Desktop\Git Repos\C#\functionalcsharp\test\obj\Debug\netcoreapp1.1\Functional_csharp.AssemblyInfo.cs
+C:\Users\fhala958\Desktop\Git Repos\C#\functionalcsharp\test\obj\Debug\netcoreapp1.1\Functional_csharp.dll
+C:\Users\fhala958\Desktop\Git Repos\C#\functionalcsharp\test\obj\Debug\netcoreapp1.1\Functional_csharp.pdb

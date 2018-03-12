@@ -1,0 +1,153 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 ProximaNova-Bold;}{\f1\fnil\fcharset0 Times New Roman;}{\f2\fnil Times New Roman;}{\f3\fnil Consolas;}{\f4\fnil\fcharset0 Consolas;}{\f5\fnil\fcharset0 Sabon-Roman;}{\f6\fnil\fcharset0 WileyCode-Regular;}{\f7\fnil Arial;}{\f8\fnil\fcharset0 MathematicalPi-One;}{\f9\fnil\fcharset0 ProximaNova-Semibold;}{\f10\fnil\fcharset2 Symbol;}}
+{\colortbl ;\red43\green145\blue175;\red0\green0\blue0;\red0\green0\blue255;\red163\green21\blue21;\red0\green128\blue0;}
+{\*\generator Riched20 10.0.16299}\viewkind4\uc1 
+\pard\qc\b\f0\fs28\lang9 FUNCTIONAL C#\b0\f1\fs22\par
+
+\pard\fs19 One of the main reasons programmers become interested in functional programming today is\par
+the need for concurrency programming models. This need, in turn, comes from the evolution\par
+
+\pard\sa200\sl276\slmult1 of the hardware toward multicore and multiprocessor setups.\par
+
+\pard In functional programming, the kind of data access where multiple methods or functions in a program have shared access to the same data \f2\emdash\f1  most importantly write access to that data \f2\emdash\f1  is called a side effect.\par
+\fs22\par
+\b\f0\fs28 ANONYMOUS FUNCTIONS AND LAMBDA EXPRESSIONS\b0\f1\fs22\par
+
+\pard\sl276\slmult1\cf1\f3\fs19 Func\cf2 <\cf3 object\cf2 , \cf3 object\cf2 , \cf3 bool\cf2 > \lang1033 isAGreaterThanB\f4  \f3\lang9 =\f4\lang1033  \f3\lang9 (a, b) => ((\cf3 int\cf2 )a) > ((\cf3 int\cf2 )b);\par
+\cf0\f5 This delegate takes two \f6\fs17 object \f5\fs19 type parameters and returns a \f6\fs17 bool\f5\fs19 .\f1\fs22\par
+\f5\fs19 Since .NET 3.5 and C# 3.0, there is a feature called expression trees. This is a framework feature\par
+that allows runtime storage of functions in a non - compiled format, coupled with a language\par
+feature that can translate lambda expressions into the storage format.\par
+\par
+\cf3\f3 var\cf2  add = (\cf3 int\cf2  x, \cf3 int\cf2  y) = > x + y;\cf0\f6\fs17\par
+\f5\fs19 You would think this could work, but it doesn \rquote  t. The reasoning on the side of the language\par
+team was that it \rquote  s because the compiler can \rquote  t decide whether \f6\fs17 add \f5\fs19 is going to be a \cf1\f3 Func\cf2 <\cf3 int\cf2 ,\cf3 int\cf2 , \cf3 int\cf2 >\cf0\f6\fs17  \f5\fs19 or perhaps an \f6\fs17 Expression \cf2\f3\fs19 <\cf1 Func\cf2 <\cf3 int\cf2 , \cf3 int\cf2 , \cf3 int\cf2 >> \cf0\f5 (this nested generic type would\par
+be used to support expression trees).\par
+
+\pard\par
+\b\f0\fs28 EXTENSION METHODS\b0\f5\fs19\par
+Extension methods are static methods in static classes that are marked up specially:\par
+\cf3\f3 public\cf2  \cf3 static\cf2  \cf3 class\cf2  \cf1 StringHelpers\cf2\par
+    \{\par
+        \cf3 public\cf2  \cf3 static\cf2  \cf3 string\cf2  Concat(\cf3 this\cf2  \cf3 string\cf2 [] strings, \cf3 string\cf2  separator)\par
+        \{\par
+        \}\f4\lang1033  ...\f3\lang9\par
+
+\pard\sl276\slmult1\cf0\f5 The markup that makes \f6\fs17 Concat \f5\fs19 an extension method is the little keyword \f6\fs17 this \f5\fs19 used in front\par
+of the parameter strings in the parameter list of the method. This keyword is specifi c to C#, and\par
+it instructs the compiler to add the \f6\fs17 ExtensionMethodAttribute \f5\fs19 to the method.\cf2\f4\lang1033  \par
+\par
+\cf0\f5 Every extension method has a specifi c type that it extends: \ul the type of the first parameter,the one\par
+that gets marked with \f6\fs17 this\ulnone\f5\fs19 .This is only allowed for the first parameter, not for any of the others. The type in the previous example is \cf3\f3\lang9 string\cf2 []\cf0\f5\lang1033 , so the extension method is available for \cf3\f3\lang9 string\cf2 []\cf0\f6\fs17\lang1033  \f5\fs19 as well as \b all types derived therefrom\b0  (of which there are none, because it is impossible to derive from \cf3\f3\lang9 string\cf2 []\cf0\f5\lang1033 ).\cf2\f4\par
+\par
+\f5\lang9 The one thing that is required for the compiler (and Visual Studio) to find the method is \ul\b a using statement for the namespace in which the class with the extension method lives\ulnone\b0 . \cf0 You can write extension methods where the first parameter is of a base class type, or an interface, or even \cf2\f3 System.\cf1 Object\cf0\f6\fs17  \f5\fs19 . Extension methods can also be generic, and they can extend generic types\cf2\ul\b\par
+
+\pard\ulnone\b0\par
+\cf3\f3 public\cf2  \cf3 static\cf2  \cf3 class\cf2  \cf1 extensionmethods\cf2\par
+    \{\par
+        \cf3 public\cf2  \cf3 static\cf2  \cf3 void\cf2  printType(\cf3 this\cf2  \cf1 Object\cf2  thing)\par
+        \{\par
+            \cf1 Console\cf2 .WriteLine(thing.GetType().FullName);\par
+        \}\par
+\par
+        \cf3 public\cf2  \cf3 static\cf2  \cf3 double\cf2  square(\cf3 this\cf2  \cf3 int\cf2  x)\par
+        \{\par
+            \cf3 return\cf2  \cf1 Math\cf2 .Pow(x, 2);\par
+        \}\par
+\par
+        \cf3 public\cf2  \cf3 static\cf2  \cf1 T\cf2  secondElement<\cf1 T\cf2 >(\cf3 this\cf2  \cf1 IList\cf2 <\cf1 T\cf2 > collection)\par
+        \{\par
+\par
+            \cf3 return\cf2  collection[1];\par
+        \}\par
+    \}\par
+\par
+\cf3 var\cf2  stringval = \cf4 "My string"\cf2 ;\par
+\cf3 int\cf2 [] myObjectArray = \{ 251, 423, 663, 144, 375 \};\par
+stringval.printType(); \cf5 //this will cause error if you stick it in a console.writeline\f4\lang1033  prints 'System.string'\cf2\f3\lang9\par
+\cf1 Console\cf2 .WriteLine(5.square());\f4\lang1033  \cf5\f3\lang9 //\f4\lang1033 prints 25\cf2\f3\lang9\par
+\cf1 Console\cf2 .WriteLine(myObjectArray.secondElement());\f4\lang1033  \cf5\f3\lang9 //\f4\lang1033 prints 423\cf2\f3\lang9\par
+\cf0\f5\par
+
+\pard\sl276\slmult1 You can see that it is possible to call an extension method on literals of a supported type just as\par
+well as on variables of that type. The method \f6\fs17 SecondElement \f5\fs19 even extends a generic interface\par
+type, which is implemented by the \f6\fs17 int \f5\fs19 array that is passed in in the example code \f7\emdash\f5  but the same\par
+interface is implemented by many other collection types, making the function widely applicable.\par
+Using a parameter type that opens a function for a wide group of types is just good practice, but\par
+with extension methods such a helper becomes readily, and obviously, available.\par
+\par
+\b\f0\fs28 REFERENTIAL TRANSPARENCY\par
+\b0\f5\fs19 Because of the focus on execution sequence, functions and methods in imperative programming\par
+tend to be referentially opaque. This means that even if they are called with the same (or no) input\par
+parameters, they are not guaranteed to return the same result every time. Referential transparency is the opposite of this. The term can be applied to any expression, and it means that the expression could be replaced with its value without changing the program, that is, without changing the results rendered by the algorithm in which the hypothetical replacement happens. In mathematics, expressions are always referentially transparent, so it is easy to fi nd examples there. For instance, the expression \ldblquote  3 \f8\'02 \f5 2 \rdblquote  can be replaced by \ldblquote  5 \rdblquote  in any mathematical context, without changing anything about the meaning.\par
+\par
+Some expressions or functions can never be referentially transparent because it is their purpose to\par
+return values that change, or to return a different value every time. .NET examples of this would be \f6\fs17 DateTime.Now \f5\fs19 , \f6\fs17 File.ReadByte() \f5\fs19 or \f6\fs17 Console.Read() \f5\fs19 . In C#, functions that have a return type of \f6\fs17 void \f5\fs19 can \rquote  t be used as an expression, so they are referentially opaque as well. \par
+\par
+One of the most important concepts in functional programming is the avoidance of side effects in the implementation of functions. This topic is very close to that of referential transparency. A pure function is one that does not have any side effects, one that just calculates a return value from a set of parameters. The function can call other functions as part of its algorithm, and it can access values from outside its own scope, provided these are referentially transparent and never change. Imagine an algorithm that uses \f6\fs17 Math.PI \f7\fs19\emdash\f5  that \rquote  s allowed because it \rquote  s a constant value being accessed. \par
+
+\pard\sl276\slmult1 To write pure functions:\par
+
+\pard{\pntext\f10\'B7\tab}{\*\pn\pnlvlblt\pnf10\pnindent0{\pntxtb\'B7}}\fi-360\li720\sl276\slmult1 Use only your input parameters and return a value at the end. \par
+{\pntext\f10\'B7\tab}To access things outside your scope, structure your code so that you end up calling other pure functions in order to do so. \par
+{\pntext\f10\'B7\tab}To access actual data elements, make sure they are constant. \par
+
+\pard\sl276\slmult1 Everything you do that doesn\rquote t fit this description is a side effect, which you generally don\rquote t want.\cf2\f3\par
+
+\pard\cf1\par
+
+\pard\sl276\slmult1\cf0\f5 Obviously computer programs wouldn \rquote  t be very powerful if programmers didn \rquote  t have a way to do these things. As a result, there \rquote  s an even more important goal than the one of avoiding side effects: \ul\b managing side effects\ulnone\b0 . In Haskell, for example, monads allow you to do this. There are other ways in other languages, but that \rquote  s not important here \f7\emdash\f5  unfortunately, C# doesn \rquote  t have any such special support in the language, which makes the avoidance of side effects a discipline and the management of them an architectural and structural task.\par
+
+\pard\par
+\f9\fs56 ch4 Flexible Typing with Generics\par
+
+\pard\sl276\slmult1\f5\fs19 The .NET type system has a feature called generics. With the help of this feature, certain pieces of type information can be extended by type parameters. In .NET, classes, methods, interfaces, and delegates can be generic. \par
+\par
+\b\f0\fs28 GENERIC FUNCTIONS\par
+\b0\f5\fs19 Any method can be made generic by adding one or more type parameters to the method signature\par
+like this:\par
+
+\pard\cf3\f3 static\cf2  \cf3 void\cf2  OutputThing<\cf1 T\cf2 >(\cf1 T\cf2  thing)\par
+\{\par
+    \cf1 Console\cf2 .WriteLine(\cf4 "Thing: \{ 0\}"\cf2 , thing);\par
+\}\par
+
+\pard\sl276\slmult1\cf1 T\cf0\f6\fs17  \f5\fs19 is the type variable in this example, and it is listed in angle brackets right after the method name.\par
+Once it has been declared that way, it can be used in place of a type in the parameter list and also\par
+within the method body.\par
+\cf2\f3 OutputThing<\cf3 int\cf2 >(42);\f4\lang1033  \cf5\f3 //prints \f4 'Thing: 42' \cf2\f3\lang9\par
+OutputThing<\cf3 string\cf2 >(\cf4 "Hellow World"\cf2 );\f4\lang1033  \cf5\f3 //prints \f4 'Thing: \f3 Hellow World\f4 '\par
+\cf0\ul\i\f5\lang9\par
+The types can also be omitted: \cf5\f4\lang1033\par
+\cf2\ulnone\i0\f3\lang9 OutputThing(42);\f4\lang1033  \cf5\f3 //prints \f4 'Thing: 42'\cf2\f3\lang9\par
+OutputThing(\cf4 "Hellow World"\cf2 );\f4\lang1033  \cf5\f3 //prints \f4 'Thing: \f3 Hellow World\f4 '\par
+\cf0\f5 Type inference is used here to deduce the type from the literal value. This is not an untyped call;\par
+there\rquote s still a type variable \cf5\f4 T\cf0\f6\fs17  \f5\fs19 on the \f6\fs17 OutputThing \f5\fs19 method, and it is equal to \f6\fs17 string \f5\fs19 and \f6\fs17 int\f5\fs19 , respectively, in these two calls, as in the preceding examples. But the compiler does the work of inserting these types for the programmer. Another example:\cf5\f4\par
+\cf1\f3\lang9\par
+\cf3 static\cf2  \cf3 void\cf2  Apply<\cf1 T\cf2 >(\cf1 IEnumerable\cf2 <\cf1 T\cf2 > sequence, \cf1 Action\cf2 <\cf1 T\cf2 > action)\par
+\{\par
+    \cf3 foreach\cf2  (\cf1 T\cf2  item \cf3 in\cf2  sequence)\par
+    \{\par
+        action(item);\par
+    \}\par
+\}\par
+\par
+\cf0\f5 This time \cf1\f3 T\cf0\f5  is used in both parameters of the method. There\rquote s a connection being established: the fi rst parameter is a sequence of \ldblquote  things \rdblquote , and the second parameter is a delegate that has a parameter of the same \ldblquote  thing \rdblquote  type that is in the sequence. This is where generics prove really powerful because there\rquote s no way to express the same thing without them and still keep the method fl exible to work with different types.\par
+Here\rquote s a call to \f6\fs17 Apply \f5\fs19 :\par
+\cf3\f3\par
+var\cf2  values = \cf3 new\cf2  \cf1 List\cf2 <\cf3 int\cf2 > \{ 10, 20, 35 \};\par
+Apply(values, v = > \cf1 Console\cf2 .WriteLine(\f4\lang1033 "\f3\lang9 Value: \{ 0\}\f4\lang1033 "\f3\lang9 , v));\par
+\cf0\f5\par
+Take a moment to look at all the interesting things happening in this example. \f6\fs17 values \f5\fs19 is a list of\par
+\f6\fs17 int \f5\fs19 values, as the generic parameter to the \f6\fs17 List \f5\fs19 class declares explicitly. \f6\fs17 Apply \f5\fs19 is called, but the\par
+generic parameter is left out. The compiler needs to infer the type of \cf1\f3 T\cf0\f6\fs17  \f5\fs19 for the \f6\fs17 Apply \f5\fs19 call, and it\par
+does this by looking at the parameters. It fi nds the \f6\fs17 values \f5\fs19 parameter, of type \cf1\f3 List\cf2 <\cf3 int\cf2 >\cf0\f6\fs17  \f5\fs19 , which\par
+implements \cf1\f3 IEnumerable\cf2 <\cf3 int\cf2 >\cf0\f6\fs17  \f7\fs19\emdash\f5  so the type \cf1\f3 T\cf0\f6\fs17  \f5\fs19 from the point of view of the method \f6\fs17 Apply\par
+\f5\fs19 must be \f6\fs17 int \f5\fs19 .\par
+Moving on, the compiler also performs type inference for the lambda expression that \rquote  s passed as the\par
+second parameter. The parameter \f6\fs17 v \f5\fs19 must be an \f6\fs17 int \f5\fs19 , because the type for \f6\fs17 Apply \f5\fs19 has been inferred as\par
+being an \f6\fs17 int \f5\fs19 already. The compiler checks whether the code in the body of the lambda is compatible\par
+with \f6\fs17 v \f5\fs19 being an \f6\fs17 int \f5\fs19 , which is the case here.\par
+\par
+\cf1\f3\par
+}
+ 
